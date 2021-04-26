@@ -13,10 +13,6 @@ end;
 
 architecture synth of progrom is
 
-signal branch : std_logic;
-signal clk : std_logic;
-signal reset : std_logic;
-
 begin
 
 
