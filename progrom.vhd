@@ -17,7 +17,7 @@ end;
 architecture synth of progrom is
 
 constant rom_depth : natural := 2**10; -- confirm upper limit/ else 2^7 is the upper limit
-constant rom_width : natural := 32;
+constant rom_width : natural := 32; -- may need to split up to 2 - 16 bit words each
 
  
 type rom_type is array (0 to rom_depth - 1)
