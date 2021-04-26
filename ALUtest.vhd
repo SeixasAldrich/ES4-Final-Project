@@ -49,11 +49,13 @@ begin
 			
 		-- carry, no overflow
 		srcA <= (31 downto 0 => '1'); srcB <= (31 downto 0 => '1'); command <= "0100"; wait for 10 ns;
-			assert flags(1) = '1' report "Carry detection failed";
+			--assert result = (31 downto 1 => '1', 0 => '0') report "-1 + -1 failed";
+			assert (flags(1) = '1' and flags(0) = '0') report "Carry, no overflow detection failed";
 			
 		-- no carry overflow	
 		srcA <= (31 => '0' ,30 downto 0 => '1'); srcB <= (31 downto 1 => '0', 0=>'1'); command <= "0100"; wait for 10 ns;
-			assert flags(1) = '1' report "overflow, no carry detection failed";
+			assert result = (31 downto 30 => "10", 29 downto 0 =>'1') report "-1+-128 failed";
+			assert (flags(0) = '1' and flags(1) = '0') report "overflow, no carry detection failed";
 	wait;
 	end process;
 

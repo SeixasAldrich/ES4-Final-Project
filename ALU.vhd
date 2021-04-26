@@ -16,12 +16,13 @@ end;
 
 architecture synth of alu is
 
-signal a,b: signed(32 downto 0);
+signal a,b: unsigned(32 downto 0);
 signal intermediate: std_logic_vector(32 downto 0); 
 
 begin
-	a <= srcA(31) & signed(srcA);
-	b <= srcB(31) & signed(srcB);
+	a <= '0' & unsigned(srcA);
+	b <= '0' & unsigned(srcB);
+	
 	intermediate <= ('0' & (srcA and srcB)) when command = "0000" else --AND
 					('0' & (srcA or srcB)) when command = "1100" else -- OR
 					('0' & srcB) when command = "1101" else -- MOV
@@ -31,18 +32,18 @@ begin
 	
 	result <= intermediate(31 downto 0);
 	
-	flags(2) <= '1' when intermediate = 33d"0" else '0'; -- Zero flag
-	flags(3) <= '1' when intermediate(31) = '1' else '0'; -- Negative flag
+	flags(2) <= '1' when result = 32d"0" else '0'; -- Zero flag
+	flags(3) <= '1' when result(31) = '1' else '0'; -- Negative flag
 	flags(0) <= '1' when (command = "0100") and (srcA(31) = srcB(31)) and (result(31) /= srcA(31)) else
-				'1' when (command = "0010" or command = "0011") and (srcA(31) = srcB(31)) and (result(31) /= srcA (31))
+				'1' when (command = "0010" or command = "0011") and (srcA(31) /= srcB(31)) and (result(31) /= srcA (31))
 				else '0'; -- Overflow flag
 				
 	-- bug when 127 + 1
 	-- this is probably wrong
-	flags(1) <= '1' when (command = "0100") and (srcA(31) = srcB(31)) and (result(31) = srcA(31)) else
-				'1' when (command = "0010" or command = "0011") and (srcA(31) = srcB(31)) and (result(31) = srcA (31)) else '0';
+	--flags(1) <= '1' when (command = "0100") and (srcA(31) = srcB(31)) and (result(31) = srcA(31)) else
+	--			'1' when (command = "0010" or command = "0011") and (srcA(31) = srcB(31)) and (result(31) = srcA (31)) else '0';
 
-
+	flags(1) <= '1' when intermediate(32) = '1' else '0';
 
 
 
