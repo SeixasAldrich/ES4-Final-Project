@@ -16,7 +16,7 @@ end;
 
 architecture synth of progrom is
 
-constant rom_depth : natural := 2**10;
+constant rom_depth : natural := 2**10; -- confirm upper limit/ else 2^7 is the upper limit
 constant rom_width : natural := 32;
 
  
