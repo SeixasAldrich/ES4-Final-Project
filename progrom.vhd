@@ -16,8 +16,8 @@ end;
 
 architecture synth of progrom is
 
-constant rom_depth : natural := 2**10; -- confirm upper limit/ else 2^7 is the upper limit
-constant rom_width : natural := 32; -- may need to split up to 2 - 16 bit words each
+constant rom_depth : natural := 2**10;
+constant rom_width : natural := 32;
 
  
 type rom_type is array (0 to rom_depth - 1)
@@ -25,14 +25,24 @@ type rom_type is array (0 to rom_depth - 1)
   
  signal rom: rom_type;
 begin
+
 	--hard coding memeory
+	
+	
+	
 	process (all) begin
-		for i in 0 to (rom_depth-1) loop
-			rom(i) <= std_logic_vector(to_unsigned(2*i, rom_width));
+	
+		rom(0) <= "00000011101000000001" & 12d"5"; -- MOV R1, #5
+		rom(4) <= "00000011101000000010" & 12d"10"; -- MOV R2, #10
+		rom(8) <= "00000011101000000011" & 12d"27"; -- MOV R3, #27
+		rom(12) <= "00000000100000010010000000000011"; -- ADD R1, R2, R3
+		
+		for i in 13 to (rom_depth-1) loop
+			rom(i) <= 32d"0"; -- MOV R1, R1
 		end loop;
 		
 	end process;
 
-data <= rom(to_integer(addr));
+data <= rom(to_integer(unsigned(addr)));
 
 end;

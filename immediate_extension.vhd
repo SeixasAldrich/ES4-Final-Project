@@ -37,7 +37,7 @@ begin
 	
 	rot <= unsigned(imm(11 downto 8));
 	
-	immediate <= 24b"0" + unsigned(imm(7 downto 0));
+	immediate <= 24b"0" & unsigned(imm(7 downto 0));
 	
 	rot2 <= rot * 2;
 	
