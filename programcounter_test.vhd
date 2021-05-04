@@ -24,29 +24,33 @@ begin
 	dut: programcounter_test port map(clk, reset, branch, branchAddr, pc);
 	process begin
     
-	clk <= '0';
-	reset <= '0';
-	branch <= '0';
-	branchAddr <= 32D"12";
-		assert pc = 32D"0" report "starting value failed.";
+		clk <= '0';
+		reset <= '0';
+		branch <= '0';
+		-- check starting value of pc
+			assert pc = 32D"0" report "starting value failed.";
 
-	clk <= '1'; wait 10 ns;
-		assert pc = 32D"4" report "first increment failed.";
-	clk <= '0';
+		clk <= '1'; wait 10 ns;
+		-- check incrementation of pc on rising edge of clock
+			assert pc = 32D"4" report "first increment failed.";
+		clk <= '0';
 
-	reset <= '1';
-	clk <= '1'; wait 10 ns;
-		assert pc = 32D"0" report "reset failed.";
-	clk <= '0';
+		reset <= '1';
+		clk <= '1'; wait 10 ns;
+		-- check reset of pc on rising edge of clock
+			assert pc = 32D"0" report "reset failed.";
+		clk <= '0';
 
 
-	reset <= '0';
-	branch <= '1';
-	clk <= '1'; wait 10 ns;
-		assert pc = 32D"12" report "branch failed.";
-	clk <= '0';
-	
-	wait;
+		reset <= '0';
+		branch <= '1';
+		branchAddr <= 32D"12";
+		clk <= '1'; wait 10 ns;
+		-- check branching of pc on rising edge of clock
+			assert pc = 32D"12" report "branch failed.";
+		clk <= '0';
+
+		wait;
 
 	end process;
 end;
