@@ -24,25 +24,26 @@ type rom_type is array (0 to rom_depth - 1)
   of std_logic_vector(rom_width - 1 downto 0);
   
  signal rom: rom_type;
+ signal mem_address: unsigned (31 downto 0);
 begin
 
 	--hard coding memeory
-	
-	
+	-- drop 2 lsb of address
+	mem_address <= "00" & addr(31 downto 2);
 	
 	process (all) begin
 	
 		rom(0) <= "00000011101000000001" & 12d"5"; -- MOV R1, #5
-		rom(4) <= "00000011101000000010" & 12d"10"; -- MOV R2, #10
-		rom(8) <= "00000011101000000011" & 12d"27"; -- MOV R3, #27
-		rom(12) <= "00000000100000010010000000000011"; -- ADD R1, R2, R3
+		rom(1) <= "00000011101000000010" & 12d"10"; -- MOV R2, #10
+		rom(2) <= "00000011101000000011" & 12d"27"; -- MOV R3, #27
+		rom(3) <= "00000000100000010010000000000011"; -- ADD R1, R2, R3
 		
-		for i in 13 to (rom_depth-1) loop
-			rom(i) <= 32d"0"; -- MOV R1, R1
+		for i in 4 to (rom_depth-1) loop
+			rom(i) <= "00000001101000000001000000000001"; -- MOV R1, R1
 		end loop;
 		
 	end process;
-
-data <= rom(to_integer(unsigned(addr)));
+--
+data <= rom(to_integer(mem_address));
 
 end;
