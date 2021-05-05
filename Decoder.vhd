@@ -21,10 +21,10 @@ architecture synth of decoder is
 
 begin
 
-	aluControl <= instruction(24 downto 21);
-	addrA <= unsigned(instruction(19 downto 16));
-	addrB <= unsigned(instruction(15 downto 12));
-	addrC <= unsigned(instruction (3 downto 0));
+	aluControl <= "0100" when (instruction(27 downto 26) = "01" or instruction(27 downto 26) = "10") else instruction(24 downto 21);
+	addrA <= unsigned(instruction(19 downto 16)); --Rn
+	addrB <= unsigned(instruction(15 downto 12)); --Rd
+	addrC <= unsigned(instruction (3 downto 0)); -- Rm
 	useImm <= instruction(25);
 
 end;
