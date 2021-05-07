@@ -1,0 +1,27 @@
+   0:	e04f000f 	sub	r0, pc, pc
+   4:	e2802005 	add	r2, r0, #5
+   8:	e280300c 	add	r3, r0, #12
+   c:	e2437009 	sub	r7, r3, #9
+  10:	e1874002 	orr	r4, r7, r2
+  14:	e0035004 	and	r5, r3, r4
+  18:	e0855004 	add	r5, r5, r4
+  1c:	e0558007 	subs	r8, r5, r7
+  20:	0a00000c 	beq	58 <END>
+  24:	e0538004 	subs	r8, r3, r4
+  28:	aa000000 	bge	30 <AROUND>
+  2c:	e2805000 	add	r5, r0, #0
+
+00000030 <AROUND>:
+  30:	e0578002 	subs	r8, r7, r2
+  34:	b2857001 	addlt	r7, r5, #1
+  38:	e0477002 	sub	r7, r7, r2
+  3c:	e5837054 	str	r7, [r3, #84]	; 0x54
+  40:	e5902060 	ldr	r2, [r0, #96]	; 0x60
+  44:	e08ff000 	add	pc, pc, r0
+  48:	e280200e 	add	r2, r0, #14
+  4c:	ea000001 	b	58 <END>
+  50:	e280200d 	add	r2, r0, #13
+  54:	e280200a 	add	r2, r0, #10
+
+00000058 <END>:
+  58:	e5802064 	str	r2, [r0, #100]	; 0x64
