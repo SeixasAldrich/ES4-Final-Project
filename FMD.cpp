@@ -27,11 +27,11 @@ int main(int argc, char *argv[]) {
     }
     
     for(int i = 0; i < temp_values.size(); i++) {
-        output_values.push_back("when 32d\"" + i + "\" => data <= \"" + temp_values[i] + "\";");
+        output_values.push_back("when 32d\"" + to_string(i) + "\" => data <= \"" + temp_values[i] + "\";");
     }
     
-    for(int i = 0; i < temp_values.size(); i++) {
-        cout << temp_values[i];
+    for(int i = 0; i < output_values.size(); i++) {
+        cout << output_values[i];
         cout << endl;
     }
     
