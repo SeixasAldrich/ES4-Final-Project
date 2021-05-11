@@ -1,0 +1,5 @@
+ldc_set_location -site {2} [get_ports reset]
+ldc_set_location -site {4} [get_ports clk]
+ldc_set_location -site {42} [get_ports {PC[2]}]
+ldc_set_location -site {28} [get_ports output2]
+ldc_set_location -site {38} [get_ports output1]
