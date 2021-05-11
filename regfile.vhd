@@ -40,13 +40,13 @@ begin
 	process(all) is
 	begin
 		
-		if (to_integer(A1) = 15) then 
+		if (A1 = "1111") then 
 			RD1 <= R15;
 		else 
 			RD1 <= mem(to_integer(A1));
 		end if;
 		
-		if (to_integer(A2) = 15) then 
+		if (A2 = "1111") then 
 			RD2 <= R15;
 		else 
 			RD2 <= mem(to_integer(A2));

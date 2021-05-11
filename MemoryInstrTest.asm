@@ -1,0 +1,10 @@
+MOV R0, #5
+MOV R1, #10
+MOV R2, #23
+STR R2, [R1]
+STR R1, [R0, #10]
+LDR R5, [R1, #5]
+LDR R6, [R1]
+ADD R7, R1, R5
+SUB R8, R2, R6
+

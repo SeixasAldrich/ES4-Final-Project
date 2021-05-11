@@ -4,43 +4,32 @@ use IEEE.numeric_std.all;
 
 entity immextend is
 	port(
-		imm : in std_logic_vector(11 downto 0);
+		operation: in std_logic_vector(1 downto 0);
+		imm : in std_logic_vector(23 downto 0);
 		immout : out std_logic_vector(31 downto 0)
 	);
 end;
 
 architecture synth of immextend is
 
-signal rot : unsigned(3 downto 0);
-signal immediate : unsigned(31 downto 0);
-signal rot2 : unsigned(7 downto 0);
---signal i : unsigned(4 downto 0);
 
 begin
-	
-	--process is
-	
-	--	rot <= unsigned(imm(11 downto 8));
-	--	immediate <= 24b"0" + unsigned(imm(7 downto 0));
+
+	process (all) begin
+		case (operation) is
 		
-	--	rot2 <= rot * 2;
+		when "00" => immout <= (31 downto 8 => '0', 7 downto 0 => imm(7 downto 0)) ror (2*to_integer(unsigned(imm(11 downto 8))));
 		
-	--	i <= 5b"0";
+		when "01" => immout <= (20b"0", imm(11 downto 0));
 		
-	--	while (i < rot2) loop
-		--	immediate <= immediate(0) + immediate(31 downto 1);
-	--	end loop;
-		
-	--	immout <= std_logic_vector(immediate);
+		when "10" => immout <= (imm(23), imm(23), imm(23), imm(23), imm(23), imm(23), imm(23 downto 0), "00");
 	
-	--end process;
+		when others => immout <= 32b"0";
 	
-	rot <= unsigned(imm(11 downto 8));
+	end case;
 	
-	immediate <= 24b"0" + unsigned(imm(7 downto 0));
+	end process;
 	
-	rot2 <= rot * 2;
 	
-	immout <= std_logic_vector(immediate) ror to_integer(rot2);
 	
 end;
