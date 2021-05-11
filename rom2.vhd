@@ -23,21 +23,22 @@ constant rom_width : natural := 32;
 type rom_type is array (0 to rom_depth - 1)
   of std_logic_vector(rom_width - 1 downto 0);
   
-  
-  impure function init_rom_bin return rom_type is
-  file text_file : text open read_mode is "source/impl_1/bookTestBench.txt";
-  variable text_line : line;
-  variable rom_content : rom_type;
-  variable i : integer := 0;
-begin
-  while not endfile(text_file) loop
-    readline(text_file, text_line);
-    bread(text_line, rom_content(i));
-	i := i+1;
-  end loop;
- 
-  return rom_content;
-end function;
+  process is
+	file txt: text;
+	variable L: line;
+	variable i: integer := 0;
+	variable rom_content : rom_type;
+
+	begin
+		FILE_OPEN(txt, "source/impl_1/bookTestBench.txt", READ_MODE);
+		while not endfile(tv) loop
+			wait until rising_edge(clk);
+			readline(txt, L);
+			bread(text_line, rom_content(i));
+			i := i+1;
+			return rom_content;
+		end loop;
+  end process;
   
  signal rom: rom_type:= init_rom_bin;
  
