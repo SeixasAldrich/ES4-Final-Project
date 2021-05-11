@@ -12,6 +12,12 @@ all:
 	# Dump the results
 	$(ARCH)objdump -d $(BASENAME) | tail -n +8 > $(RESULT)
 
+get_hex: get_hex.cpp
+	g++ get_hex.cpp -o get_hex -Wall -Wextra
+
+get_text: 
+	./get_hex $(BASENAME).lst > $(BASENAME).txt
+
 clean:
 	rm $(BASENAME)
 	rm $(RESULT)
