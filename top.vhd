@@ -5,7 +5,8 @@ use IEEE.numeric_std.all;
 entity top is
 port ( reset: in std_logic;
 		PC: out std_logic_vector(5 downto 0);
-		output1, output2: out std_logic
+		output1, output2, output3: out std_logic;
+		input1, input2: in std_logic
 );
 
 end;
@@ -29,7 +30,8 @@ port(
 clk: in std_logic;
 PCreset : in std_logic;
 PCcount: out std_logic_vector(5 downto 0);
-output1, output2: out std_logic
+output1, output2, output3: out std_logic;
+input1, input2: in std_logic
 );
 end component;
 	
@@ -52,7 +54,7 @@ end process;
 
 bloop <= not reset;
 
-cpu: datapath port map(count(23), bloop, PC, output1, output2);
+cpu: datapath port map(count(22), bloop, PC, output1, output2, output3, input1, input2);
 
 
 end;

@@ -7,7 +7,8 @@ port(
 clk: in std_logic;
 PCreset : in std_logic;
 PCcount: out std_logic_vector(5 downto 0);
-output1, output2: out std_logic
+output1, output2, output3: out std_logic;
+input1, input2: in std_logic
 );
 end;
 
@@ -96,7 +97,8 @@ port ( clk: in std_logic;
 		write_data: in unsigned(31 downto 0);
 		read_data: out unsigned(31 downto 0);
 		-- for I/O
-		output1, output2: out std_logic
+		output1, output2, output3: out std_logic;
+		input1, input2: in std_logic
 );
 end component;
 
@@ -137,7 +139,7 @@ logicUnit: alu port map(srcA, srcB, ALUControl, ALUresult, flags); -- src signal
 
 extender: immextend port map (ImmSrc, instruction(23 downto 0), immout);
 
-ramUnit: ram port map (clk, memWrite, unsigned(ALUresult), unsigned(RD2), readMemData, output1, output2);
+ramUnit: ram port map (clk, memWrite, unsigned(ALUresult), unsigned(RD2), readMemData, output1, output2, output3, input1, input2);
 
 
 regA2 <= tempAddress2 when RegSrc2 = '0' else regA3;
