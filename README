@@ -1,3 +1,95 @@
 ES4 Final Project
+Khaled Ajaj
+Alan Cepeda
+Seixas Aldrich
+Philip Hempstead
+ES4—Spring 2021
+Professor S. Bell 
+How to Run:
+- Download the source code from Github page (5/10/2021 Branch)
+- Create a new Lattice Radiant project, add the source files to the project, or use the existing radiant project file included in the source code
+- Enable VHDL-2008
+- Right click on the testbench files; include for simulation only.
+- To run any of the ARM code:
+	- Write an assembly file with .asm as the file type
+	- Edit the makefile provided with the code to reflect the file name in the BASENAME 
+	Field
+	- Run ‘make’ on the command line
+	- Run ‘make get_hex’ on the command line
+	- Run ‘make get_text’ on the command line
+	- The result will be a .txt file with the instructions listed in 32-bit binary numbers.
+	For simulation:
+- In Lattice Radiant, find the ‘progrom.vhd’ file, and change the filename listed in the file_open function to the file from which to read the binary instructions
+	- The Modelsim simulation project file is included.
+	For the FPGA: 
+	- We had trouble initializing the ram with data from the file on the FPGA, therefore the   
+  Instructions from the test files have to be hard coded to the rom module as shown in the file ‘Progrom.vhd’.
+  - After this, synthesis can be run on the FPGA.
 
-Group: Khaled Ajaj, Alan Cepeda, Seixas Aldrich, Phil
+
+
+Current Status:
+From the simulations we have performed, the cpu appears to work correctly on Modelsim. It reads data from files and performs all the operations successfully. However, we could not get it to read data from the same files while implementing on the fpga, hard coding the instructions seems to work, but reading from files does not. Therefore, out only solution was to hard code the instructions into the rom using case statements as shown in ‘progrom.vhd’. Currently, the instructions loaded into the ram are instructions for an LED reaction game. The ARM code for that game can be seen in Game.txt. There is another LED driving program called ‘LED_game.asm’ which blinks to LEDs repeatedly. The LED blinking and reaction games proved that most of the processor works. This is because branching, memory instructions, and data processing instructions were used across all the programs, which covers most of the processor’s functionality.  
+However, the writing to R15 feature was not implemented as it was challenging to implement with the remaining time we had. Seeing as it wasn’t an important feature, it was not a big priority at the time.
+
+
+
+Design Decisions:
+For the implementation of ram and branching, we used the textbook implementation as reference, mainly. Specifically, the figures from pp. 398- 391 were very helpful in the construction of the top module. The control unit was implemented using case statements that assigned the various signals in the cpu based on the operations being performed. The ram was implemented as a memory array, similarly to the ram module, except with read and write signals.
+
+
+	Test Results:
+We were not able to get the processor working on the FPGA completely as we wanted as we had to hard code instructions into the ROM last minute as described in the previous current status section. However, we were able to write a couple of programs to test the functionality of the processor on the FPGA. The program shown below is an LED reaction game that was written in the file Game.asm:
+
+https://youtu.be/kTh9s8UqW-Q
+
+ Most other testing can be seen by simulating the datapath module using the provided modelsim projects. Some assembly test files written to test the functionality of the processor as a whole were also included, which can be used in conjunction with modelsim simulations to view the results. 
+
+
+Contributions:
+Khaled Ajaj: 
+Wrote, tested, and updated the following modules:
+  ALU
+  ROM
+  RAM
+  Decoder
+  Control unit 
+  condition checker
+  Datapath and top modules, with memory processing and branching enhancements
+  Wrote assembly tests to test the datapath functionality and simulated the results using modelsim.
+  modified the Makefile to run all the assembly to text conversion commands
+
+Seixas Aldrich:
+  Wrote and tested:
+  Program counter
+  Immediate extension module
+  Multiple C++ programs to parse text files to get certain values and output them to make testing more efficient.
+  General further testing of a multitude of modules including writing assembly code and testing the final product.
+  Assisted others on researching in the book for solutions for modules and bugs after testing.
+
+
+Alan Cepeda:
+  Wrote the following files:
+  Register file module
+  PC+8 module
+  Wrote testbenches for the following:
+  PC+8
+  Executed Testbenches for:
+  Register file
+  Researched on the internet and in the textbook for example VHDL code and solutions to bugs found after testing.
+
+
+Philip Hempstead:
+  Wrote VHDL code for the following:
+  Register file
+  PC + 8
+  Wrote test benches for the following
+  Register file
+  PC + 8
+  Program counter
+  General debugging and testing
+  Came up with various VHDL solutions to read from a text file. 
+  Hard coded the instructions to ROM.
+  Wrote a quick assembly test.
+
+	
