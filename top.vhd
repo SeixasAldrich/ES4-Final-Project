@@ -36,7 +36,8 @@ input1, input2: in std_logic
 end component;
 	
 signal count: std_logic_vector(31 downto 0);
-signal clk: std_logic;signal reg: std_logic_vector(2 downto 0):= "000";
+signal clk: std_logic;
+signal reg: std_logic_vector(2 downto 0):= "000";
 signal bloop: std_logic;
 signal temp, temp2: std_logic;
 
@@ -54,7 +55,7 @@ end process;
 
 bloop <= not reset;
 
-cpu: datapath port map(count(22), bloop, PC, output1, output2, output3, input1, input2);
+cpu: datapath port map(count(18), bloop, PC, output1, output2, output3, input1, input2);
 
 
 end;
